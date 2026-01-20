@@ -27,21 +27,20 @@
 }
 
 .hero-content {
-    width: 100%; /* Garante que o container ocupe a largura para centralizar */
+    width: 100%;
     max-width: 900px;
     z-index: 2;
     padding: 0 20px;
     
-    /* ESPAÇAMENTO: Valor ajustado para subir bastante o conteúdo */
+    /* ESPAÇAMENTO: Sobe o conteúdo para liberar espaço embaixo */
     margin-top: -20vh;
     
-    /* Garante centralização interna */
     display: flex;
     flex-direction: column;
     align-items: center; 
 }
 
-/* Estilos para a logo no hero */
+/* Estilos para a logo GRANDE no hero (não a do menu) */
 .hero-logo {
     max-width: 450px;
     width: 100%;
@@ -88,7 +87,7 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%; /* Garante largura total no desktop para centralizar */
+    width: 100%;
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
@@ -464,36 +463,33 @@
 
 /* ================= RESPONSIVE NAVBAR & GLOBAL ================= */
 @media (max-width: 968px) {
-    /* 1. Navbar: Configuração Base */
+    /* 1. Navbar usando GRID (Solução Final para o Menu em cima da Logo) */
     .navbar {
-        display: flex;
-        justify-content: center;
+        display: grid !important;
+        /* Define 3 colunas: Espaço vazio | Logo (auto) | Espaço vazio com botão */
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
         width: 100%;
-        position: relative;
         min-height: 70px;
-        padding: 0 1rem;
+        padding: 0 15px;
+        position: relative;
     }
     
-    /* 2. Logo Centralizada e LIMITADA */
+    /* 2. Logo na Coluna do Meio */
     .logo {
+        grid-column: 2; /* Fica na coluna 2 (Centro) */
+        justify-self: center;
+        
         display: flex !important;
         align-items: center;
-        justify-content: center;
         z-index: 1002;
         
-        position: absolute !important;
-        left: 50%;
-        transform: translateX(-50%);
-        
-        /* O SEGREDO: Limita a largura para não encostar no botão */
-        max-width: 60%; 
-        width: auto;
-        
+        position: static !important;
+        transform: none !important;
         margin: 0 !important;
-        order: unset;
         visibility: visible !important;
         opacity: 1 !important;
+        max-width: 100%;
     }
     
     .logo-img {
@@ -502,20 +498,21 @@
         object-fit: contain;
     }
     
-    /* 3. Botão do Menu Fixo na Direita */
+    /* 3. Botão na Coluna da Direita */
     .menu-toggle { 
+        grid-column: 3; /* Fica na coluna 3 (Direita) */
+        justify-self: end; /* Alinha no final da coluna */
+        
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1003; /* Camada acima da logo */
+        z-index: 1003;
         
-        position: absolute !important;
-        right: 15px; /* Distância da borda direita */
-        top: 50%;
-        transform: translateY(-50%); /* Centraliza verticalmente */
-        
+        position: static !important;
         margin: 0 !important;
-        order: unset;
+        transform: none !important;
+        right: auto !important;
+        top: auto !important;
     }
     
     /* 4. Menu Lateral (Off-canvas) */
@@ -636,13 +633,13 @@
         padding-top: calc(var(--header-height) + 2rem);
     }
     
-    /* 5. Centralização do conteúdo da Hero */
     .hero-content {
         margin-left: auto;
         margin-right: auto;
         padding: 0 1.5rem;
     }
 
+    /* Logo GRANDE da Hero (não confundir com a da Navbar) */
     .hero-logo {
         max-width: 350px;
         display: block !important;
@@ -654,12 +651,12 @@
 }
 
 @media (max-width: 640px) {
-    /* 6. Correção dos botões em coluna */
+    /* CORREÇÃO DOS BOTÕES NO MOBILE */
     .hero-btns {
         flex-direction: column;
         width: 100%;
         max-width: 300px;
-        margin: 0 auto; /* Centraliza o bloco */
+        margin: 0 auto;
     }
     
     .hero-btns .btn {
