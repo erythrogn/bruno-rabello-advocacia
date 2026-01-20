@@ -29,8 +29,6 @@
     max-width: 900px;
     z-index: 2;
     padding: 0 20px;
-    /* Adicionado para subir o conteúdo um pouco */
-    margin-top: -8vh; 
 }
 
 /* Estilos para a logo no hero */
@@ -446,6 +444,9 @@
     
     .hero-logo {
         max-width: 350px;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
