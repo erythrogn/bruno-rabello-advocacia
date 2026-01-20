@@ -9,24 +9,23 @@
 {% endblock %}
 
 {% block content %}
-<article class="post-container" 
+<article class="post-container post-detail-container" 
          itemscope 
          itemtype="https://schema.org/BlogPosting"
-         aria-labelledby="post-title"
-         style="margin-top: 120px;"> 
+         aria-labelledby="post-title"> 
     
-    <header class="post-header" style="display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; text-align: center; margin-bottom: 2rem;">
+    <header class="post-header post-header-centered">
         
-        <h1 id="post-title" itemprop="headline" style="margin: 0; font-family: 'Playfair Display', serif; font-size: 2.2rem; line-height: 1; color: #fff; display: inline-block;">
+        <h1 id="post-title" itemprop="headline" class="post-main-title">
             {{ post.title }}
         </h1>
         
-        <div class="meta-date" title="{{ post.publishedAt | data_formatada }}" style="display: flex; align-items: center;">
-            <i class="fa-regular fa-calendar" aria-hidden="true" style="color: #a88b68; font-size: 1rem;"></i> 
+        <div class="meta-date" title="{{ post.publishedAt | data_formatada }}">
+            <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
         </div>
 
         {% if post.author %}
-        <div class="meta-author" itemprop="author" itemscope itemtype="https://schema.org/Person" style="display: flex; align-items: center; gap: 6px; color: #ccc; font-size: 0.9rem; margin-left: 5px;">
+        <div class="meta-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
             <i class="fa-solid fa-user-pen" aria-hidden="true"></i> 
             <span itemprop="name">Por {{ post.author }}</span>
         </div>
@@ -97,7 +96,7 @@
 
 </article>
 
-<section class="section blog-cta" style="margin-top: 0; padding-top: 0;">
+<section class="section blog-cta blog-cta-section">
     <div class="container">
         <aside class="blog-cta" aria-labelledby="cta-post-title">
             <h3 id="cta-post-title">Precisa de Ajuda Jurídica?</h3>
@@ -132,8 +131,8 @@
 
 {% block scripts %}
 <script type="module">
-    import {toHTML} from 'https://cdn.jsdelivr.net/npm/@portabletext/to-html@3.0.0/+esm'
-    const rawBody = {{ post.body | tojson }};
+    import {toHTML} from 'https://cdn.jsdelivr.net/npm/@portabletext/to-html@3.0.0/+esm';
+    const rawBody = {{ post.body | tojson | safe }};
     const html = toHTML(rawBody, {
         components: {
             types: {
@@ -155,13 +154,26 @@
         setTimeout(() => container.style.opacity = '1', 50);
         if(window.Prism) Prism.highlightAll();
         // Ajustes pós-render
-        container.querySelectorAll('table').forEach(t => { const w=document.createElement('div'); w.className='table-wrapper'; t.parentNode.insertBefore(w,t); w.appendChild(t); });
+        container.querySelectorAll('table').forEach(t => { 
+            const w=document.createElement('div'); 
+            w.className='table-wrapper'; 
+            t.parentNode.insertBefore(w,t); 
+            w.appendChild(t); 
+        });
     }, 100);
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const bar = document.createElement('div'); bar.className='reading-progress'; bar.innerHTML='<div class="progress-bar"></div>'; document.body.appendChild(bar);
-    window.addEventListener('scroll', () => bar.firstChild.style.width = ((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100) + '%');
+    const bar = document.createElement('div'); 
+    bar.className='reading-progress'; 
+    bar.innerHTML='<div class="progress-bar"></div>'; 
+    document.body.appendChild(bar);
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrolled / total) * 100;
+        bar.firstChild.style.width = progress + '%';
+    });
 });
 </script>
 {% endblock %}

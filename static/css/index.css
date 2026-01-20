@@ -29,6 +29,19 @@
     max-width: 900px;
     z-index: 2;
     padding: 0 20px;
+    /* Adicionado para subir o conteúdo um pouco */
+    margin-top: -8vh; 
+}
+
+/* Estilos para a logo no hero */
+.hero-logo {
+    max-width: 450px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto 1rem auto;
+    display: block;
+    filter: brightness(0) invert(1) drop-shadow(0 4px 20px rgba(0,0,0,0.6));
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .hero h1 {
@@ -54,7 +67,7 @@
 .hero p {
     font-size: 1.25rem;
     color: rgba(255,255,255,0.9);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     font-weight: 300;
     max-width: 700px;
     margin-left: auto;
@@ -68,6 +81,11 @@
     justify-content: center;
     flex-wrap: wrap;
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
+}
+
+/* ================= BLOG INTRO SECTION ================= */
+.blog-intro-section {
+    padding-top: 0;
 }
 
 /* ================= SERVIÇOS (CARDS) ================= */
@@ -425,6 +443,10 @@
     .hero {
         padding-top: calc(var(--header-height) + 2rem);
     }
+    
+    .hero-logo {
+        max-width: 350px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -436,5 +458,9 @@
     
     .hero-btns .btn {
         width: 100%;
+    }
+    
+    .hero-logo {
+        max-width: 280px;
     }
 }

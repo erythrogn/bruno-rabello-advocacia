@@ -428,3 +428,10 @@
         font-size: 1.1rem;
     }
 }
+.map-iframe {
+    border: 0;
+}
+@media (max-width: 768px) {
+    .map-minimal iframe {
+        height: 300px;
+    }
