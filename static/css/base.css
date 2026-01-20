@@ -175,33 +175,54 @@ header.scrolled .logo-img {
     width: 100%; 
 }
 
+/* No botão pai, garantimos que o que vazar será cortado */
 .btn-nav {
     padding: 10px 28px !important;
-    border: 1px solid var(--accent-gold);
+    border: 0.5px solid var(--accent-gold);
     color: var(--accent-gold) !important;
     border-radius: var(--radius-pill);
     font-size: 0.85rem;
     transition: var(--transition);
     position: relative;
-    overflow: hidden;
+    
+    /* ESSENCIAL: Isso corta o excesso do ::before e mantém a curva perfeita */
+    overflow: hidden; 
+    
     z-index: 1;
+    /* Truque extra para suavizar bordas no Chrome/Safari */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .btn-nav::before {
     content: '';
     position: absolute;
-    bottom: 0;
+    
+    /* Começa posicionado para cobrir tudo (com folga negativa) */
+    top: -2px;
     left: 0;
-    width: 100%;
-    height: 0;
+    
+    /* Largura 0% para começar */
+    width: 0%; 
+    
+    /* Altura maior que 100% para garantir que não falte cor na vertical */
+    height: calc(100% + 4px); 
+    
     background: var(--accent-gold);
-    transition: height 0.3s ease;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: -1;
-    border-radius: var(--radius-pill);
+    
+    /* Removemos o border-radius daqui, deixamos o pai (.btn-nav) cuidar do corte */
+    border-radius: 0; 
 }
 
 .btn-nav:hover::before {
-    height: 100%;
+    /* Preenche um pouco mais que 100% para garantir que cubra a borda direita */
+    width: 110%; 
+}
+
+.btn-nav:hover { 
+    color: #fff !important;
+    border-color: var(--accent-gold);
 }
 
 .btn-nav:hover { 
