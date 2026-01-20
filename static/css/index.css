@@ -12,7 +12,7 @@
     text-align: center;
     color: #fff;
     position: relative;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
 
 .hero::before {
@@ -27,14 +27,15 @@
 }
 
 .hero-content {
-    width: 100%;
+    width: 100%; /* Garante que o container ocupe a largura para centralizar */
     max-width: 900px;
     z-index: 2;
     padding: 0 20px;
     
-    /* AJUSTE: Aumentado para -20vh para subir MUITO mais */
-    margin-top: -20vh; 
+    /* ESPAÇAMENTO: Valor ajustado para subir bastante o conteúdo */
+    margin-top: -20vh;
     
+    /* Garante centralização interna */
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -87,7 +88,7 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%;
+    width: 100%; /* Garante largura total no desktop para centralizar */
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
@@ -463,25 +464,32 @@
 
 /* ================= RESPONSIVE NAVBAR & GLOBAL ================= */
 @media (max-width: 968px) {
-    /* Navbar Flex Behavior - Com posicionamento relativo */
+    /* 1. Navbar: Configuração Base */
     .navbar {
         display: flex;
-        justify-content: center; /* Centraliza o conteúdo geral */
+        justify-content: center;
         align-items: center;
         width: 100%;
-        position: relative; /* Base para o absolute */
+        position: relative;
         min-height: 70px;
         padding: 0 1rem;
     }
     
-    /* Centraliza a Logo na força bruta (Absolute) */
+    /* 2. Logo Centralizada e LIMITADA */
     .logo {
         display: flex !important;
         align-items: center;
+        justify-content: center;
         z-index: 1002;
+        
         position: absolute !important;
         left: 50%;
         transform: translateX(-50%);
+        
+        /* O SEGREDO: Limita a largura para não encostar no botão */
+        max-width: 60%; 
+        width: auto;
+        
         margin: 0 !important;
         order: unset;
         visibility: visible !important;
@@ -489,22 +497,28 @@
     }
     
     .logo-img {
-        height: 45px !important;
+        height: 40px !important;
+        width: auto !important;
+        object-fit: contain;
     }
     
-    /* Fixa o menu toggle na direita */
+    /* 3. Botão do Menu Fixo na Direita */
     .menu-toggle { 
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1002;
+        z-index: 1003; /* Camada acima da logo */
+        
         position: absolute !important;
-        right: 20px;
+        right: 15px; /* Distância da borda direita */
+        top: 50%;
+        transform: translateY(-50%); /* Centraliza verticalmente */
+        
         margin: 0 !important;
         order: unset;
     }
     
-    /* Estilo do Menu Lateral (Off-canvas) */
+    /* 4. Menu Lateral (Off-canvas) */
     .nav-links {
         display: flex !important;
         position: fixed;
@@ -622,11 +636,11 @@
         padding-top: calc(var(--header-height) + 2rem);
     }
     
-    /* CORREÇÃO DO ALINHAMENTO DO CONTEÚDO HERO NO MOBILE */
+    /* 5. Centralização do conteúdo da Hero */
     .hero-content {
         margin-left: auto;
         margin-right: auto;
-        padding: 0 1.5rem; /* Um pouco mais de respiro nas laterais */
+        padding: 0 1.5rem;
     }
 
     .hero-logo {
@@ -634,18 +648,18 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        margin-left: auto; /* Garante centro */
-        margin-right: auto; /* Garante centro */
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
 @media (max-width: 640px) {
-    /* CORREÇÃO DOS BOTÕES NO MOBILE */
+    /* 6. Correção dos botões em coluna */
     .hero-btns {
         flex-direction: column;
         width: 100%;
         max-width: 300px;
-        margin: 0 auto; /* FUNDAMENTAL: Centraliza o bloco de botões */
+        margin: 0 auto; /* Centraliza o bloco */
     }
     
     .hero-btns .btn {
