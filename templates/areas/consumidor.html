@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Direito do Consumidor | Bruno Rabello Advocacia{% endblock %}
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/servicos.css') }}">
+{% endblock %}
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>Direito do Consumidor</h1>
+        <p>Defesa contra práticas abusivas, produtos defeituosos e falhas na prestação de serviços.</p>
+    </div>
+</section>
+
+<section class="section contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            
+            <div class="content-text">
+                <h2>Seus direitos devem ser respeitados</h2>
+                <p>A relação entre empresas e consumidores nem sempre é equilibrada. O Código de Defesa do Consumidor existe para proteger você contra abusos, propagandas enganosas e serviços mal prestados. O escritório Bruno Rabello atua para exigir a reparação de danos e o cumprimento da lei.</p>
+                
+                <h3>Principais Áreas de Atuação</h3>
+                <ul class="service-list">
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Negativação Indevida (Nome Sujo)</strong>
+                            <p>Ação de indenização por danos morais quando seu nome é inserido no SPC/Serasa por dívida inexistente ou já paga.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Problemas com Voos e Viagens</strong>
+                            <p>Indenização por cancelamento de voos, atrasos excessivos, extravio de bagagem e overbooking.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Vício do Produto ou Serviço</strong>
+                            <p>Atuação em casos de produtos com defeito que a loja se recusa a trocar ou serviços não realizados conforme o contratado.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Planos de Saúde</strong>
+                            <p>Defesa contra negativas de cobertura de exames, cirurgias, internações e aumentos abusivos de mensalidade.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Compras Online e Arrependimento</strong>
+                            <p>Problemas com entrega, produtos diferentes do anunciado e direito de arrependimento em 7 dias.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="cta-box">
+                    <h4>Teve problemas com uma empresa?</h4>
+                    <p>Não aceite o prejuízo. Se você foi lesado por uma empresa, loja ou prestadora de serviços, entre em contato para avaliar a possibilidade de indenização.</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20tive%20um%20problema%20de%20consumo%20e%20gostaria%20de%20uma%20análise." 
+                       class="btn btn-dark" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Falar com advogado pelo WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>Falar com Advogado</span>
+                    </a>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="info-card">
+                    <h3>Outras Áreas</h3>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('bancario') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito Bancário
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('previdenciario') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito Previdenciário
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-card sidebar-info">
+                    <h4>Precisa de Ajuda?</h4>
+                    <p>Entre em contato agora e faça valer seus direitos.</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." 
+                       class="btn btn-whatsapp-minimal" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,430 @@
+/* ================= PÁGINA DE CONTATO MINIMAL ================= */
+
+.page-header-minimal {
+    padding: 6rem 0 4rem;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(18, 18, 18, 1));
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+}
+
+.page-header-minimal::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    box-shadow: 0 0 15px rgba(197, 164, 126, 0.5);
+}
+
+.page-header-minimal h1 {
+    color: var(--heading-color);
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+/* Layout Grid */
+.contact-grid-minimal {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+}
+
+/* Informações de Contato */
+.contact-info-section {
+    position: sticky;
+    top: calc(var(--header-height) + 30px);
+}
+
+.info-item-minimal {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border-radius: var(--radius-md);
+    border-left: 3px solid transparent;
+    transition: var(--transition);
+    position: relative;
+}
+
+.info-item-minimal::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-dark));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+}
+
+.info-item-minimal:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(5px);
+}
+
+.info-item-minimal:hover::before {
+    transform: scaleY(1);
+}
+
+.info-item-minimal .label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.info-item-minimal .label::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--accent-gold);
+    margin-left: 10px;
+    vertical-align: middle;
+    transition: width 0.3s ease;
+}
+
+.info-item-minimal:hover .label::after {
+    width: 40px;
+}
+
+.info-item-minimal a, 
+.info-item-minimal address {
+    font-size: 1.25rem;
+    font-style: normal;
+    color: var(--heading-color);
+    font-family: 'Playfair Display', serif;
+    line-height: 1.4;
+    transition: var(--transition);
+}
+
+.info-item-minimal a:hover {
+    color: var(--accent-gold);
+}
+
+/* Botão WhatsApp Verde Sutil */
+.btn-whatsapp-minimal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(37, 211, 102, 0.05);
+    color: #25D366 !important;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    width: 100%;
+    padding: 1.2rem;
+    transition: var(--transition);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-whatsapp-minimal::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: #25D366;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease;
+}
+
+.btn-whatsapp-minimal:hover::before {
+    width: 400px;
+    height: 400px;
+}
+
+.btn-whatsapp-minimal:hover {
+    color: #fff !important;
+    border-color: #25D366;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp-minimal i,
+.btn-whatsapp-minimal span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Formulário Minimalista */
+.form-wrapper-minimal {
+    background: var(--bg-secondary);
+    padding: 3rem;
+    box-shadow: var(--shadow-card);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de luz no canto */
+.form-wrapper-minimal::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(197, 164, 126, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.form-field { 
+    margin-bottom: 2rem; 
+    position: relative;
+}
+
+/* Input Dark Mode Transparente */
+.form-field input, 
+.form-field textarea {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text-body);
+    transition: var(--transition);
+    border-radius: 0;
+}
+
+.form-field input:focus, 
+.form-field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--accent-gold);
+    background: linear-gradient(to bottom, transparent, rgba(197, 164, 126, 0.05));
+}
+
+/* Linha de foco animada */
+.form-field::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold-light));
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px rgba(197, 164, 126, 0.5);
+}
+
+.form-field:focus-within::after {
+    width: 100%;
+}
+
+.form-field input::placeholder, 
+.form-field textarea::placeholder {
+    color: #555;
+    transition: var(--transition);
+}
+
+.form-field input:focus::placeholder,
+.form-field textarea:focus::placeholder {
+    color: #777;
+    transform: translateX(5px);
+}
+
+/* Label flutuante (opcional) */
+.form-field label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.form-field input:focus + label,
+.form-field input:not(:placeholder-shown) + label,
+.form-field textarea:focus + label,
+.form-field textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+}
+
+.btn-send {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark));
+    color: #fff;
+    padding: 16px;
+    border: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-gold);
+    border-radius: var(--radius-pill);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-send::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-send:hover::before {
+    width: 500px;
+    height: 500px;
+}
+
+.btn-send:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-gold-hover);
+}
+
+.btn-send:active {
+    transform: translateY(0);
+}
+
+.btn-send span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Mapa Escuro */
+.map-minimal {
+    margin-top: 4rem;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: var(--shadow-card);
+    position: relative;
+}
+
+.map-minimal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    padding: 2px;
+    background: linear-gradient(135deg, transparent, var(--accent-gold), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.map-minimal:hover::before {
+    opacity: 0.5;
+}
+
+.map-minimal iframe {
+    filter: grayscale(100%) invert(90%);
+    border-radius: var(--radius-md);
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.map-minimal:hover iframe { 
+    opacity: 1; 
+    filter: grayscale(0%) invert(0%); 
+}
+
+/* Estados de validação */
+.form-field.error input,
+.form-field.error textarea {
+    border-bottom-color: #ef4444;
+}
+
+.form-field.error::after {
+    background: #ef4444;
+}
+
+.form-field.success input,
+.form-field.success textarea {
+    border-bottom-color: #10b981;
+}
+
+.form-field.success::after {
+    background: #10b981;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+.form-field.error .error-message {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .contact-grid-minimal { 
+        grid-template-columns: 1fr; 
+        gap: 3rem;
+    }
+    
+    .form-wrapper-minimal { 
+        padding: 2rem; 
+    }
+    
+    .contact-info-section {
+        position: static;
+    }
+    
+    .page-header-minimal {
+        padding: 4rem 0 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-wrapper-minimal {
+        padding: 1.5rem;
+    }
+    
+    .info-item-minimal {
+        padding: 1rem;
+    }
+    
+    .info-item-minimal a,
+    .info-item-minimal address {
+        font-size: 1.1rem;
+    }
+}

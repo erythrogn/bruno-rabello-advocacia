@@ -1,0 +1,378 @@
+{% extends "base.html" %}
+
+{% block title %}Início | Bruno Rabello Advocacia{% endblock %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-carousel.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Bruno Rabello Advocacia</h1>
+            <p>Atuação combativa em Direito Bancário, Previdenciário e do Consumidor. Proteja seu patrimônio e garanta seu futuro com quem entende do assunto.</p>
+            
+            <div class="hero-btns">
+                <a href="https://wa.me/5594992055378?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." 
+                   class="btn btn-primary" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   aria-label="Agendar consulta pelo WhatsApp">
+                    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                    <span>Agendar Consulta</span>
+                </a>
+                <a href="#servicos" class="btn btn-outline">
+                    <span>Conheça as Áreas</span> 
+                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Carousel Section -->
+    {% if posts %}
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Últimos Artigos</h2>
+                <p>Fique por dentro das novidades jurídicas</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="blog-hero">
+        <div class="blog-slides-container">
+            {% for post in posts[:5] %}
+            <div class="blog-slide {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}">
+                {% if post.imageUrl %}
+                <img src="{{ post.imageUrl }}" 
+                     alt="{{ post.title }}" 
+                     class="blog-slide-image"
+                     loading="{% if loop.first %}eager{% else %}lazy{% endif %}">
+                {% endif %}
+                
+                <div class="blog-slide-content">
+                    <div class="container">
+                        <div class="blog-slide-inner">
+                            {% if post.category %}
+                            <span class="blog-slide-category">{{ post.category }}</span>
+                            {% endif %}
+                            
+                            <h2 class="blog-slide-title">{{ post.title }}</h2>
+                            
+                            <p class="blog-slide-description">{{ post.description }}</p>
+                            
+                            <div class="blog-slide-meta">
+                                <span>
+                                    <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                                    {{ post.publishedAt | data_formatada }}
+                                </span>
+                                {% if post.author %}
+                                <span>
+                                    <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+                                    {{ post.author }}
+                                </span>
+                                {% endif %}
+                            </div>
+                            
+                            <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
+                               class="blog-slide-btn"
+                               aria-label="Ler artigo completo: {{ post.title }}">
+                                <span>Ler Artigo</span>
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Navigation Controls -->
+            <button class="blog-nav prev" 
+                    aria-label="Artigo anterior"
+                    onclick="changeSlide(-1)">
+                <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button class="blog-nav next" 
+                    aria-label="Próximo artigo"
+                    onclick="changeSlide(1)">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </button>
+            
+            <!-- Dots Indicator -->
+            <div class="blog-dots">
+                {% for post in posts[:5] %}
+                <span class="blog-dot {% if loop.first %}active{% endif %}" 
+                      data-slide="{{ loop.index0 }}"
+                      onclick="goToSlide({{ loop.index0 }})"
+                      aria-label="Ir para artigo {{ loop.index }}"></span>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section id="servicos" class="section services-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Áreas de Atuação</h2>
+                <p>Soluções jurídicas estratégicas para problemas complexos</p>
+            </div>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-building-columns" aria-hidden="true"></i>
+                    </div>
+                    <h3>Direito Bancário</h3>
+                    <p>Você pode estar pagando mais do que deve. Atuamos contra juros abusivos e práticas ilegais das instituições financeiras.</p>
+                    <ul class="service-list">
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Revisão de Contratos de Empréstimo</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Busca e Apreensão de Veículos</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Defesa contra Fraudes Bancárias</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Superendividamento</li>
+                    </ul>
+                    <a href="{{ url_for('bancario') }}" class="link-arrow">
+                        Saiba mais <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="service-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-hands-holding-circle" aria-hidden="true"></i>
+                    </div>
+                    <h3>Direito Previdenciário</h3>
+                    <p>Garantimos que você receba o melhor benefício possível do INSS, analisando cada detalhe do seu histórico de trabalho.</p>
+                    <ul class="service-list">
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Aposentadorias (Idade, Tempo, Especial)</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Auxílio-Doença e Acidente</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> BPC / LOAS (Idoso e Deficiente)</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Planejamento Previdenciário</li>
+                    </ul>
+                    <a href="{{ url_for('previdenciario') }}" class="link-arrow">
+                        Saiba mais <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="service-card">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+                    </div>
+                    <h3>Direito do Consumidor</h3>
+                    <p>Defesa contra práticas abusivas nas relações de consumo. Buscamos a reparação de danos e o respeito aos seus direitos.</p>
+                    <ul class="service-list">
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Negativação Indevida (Nome Sujo)</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Problemas com Voos e Viagens</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Vício do Produto ou Serviço</li>
+                        <li><i class="fa fa-check" aria-hidden="true"></i> Planos de Saúde</li>
+                    </ul>
+                    <a href="{{ url_for('consumidor') }}" class="link-arrow">
+                        Saiba mais <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt why-choose-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Por Que Nos Escolher?</h2>
+                <p>Diferenciais que fazem a diferença no seu caso</p>
+            </div>
+
+            <div class="why-grid">
+                <article class="why-card">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                    </div>
+                    <h3>Atendimento Personalizado</h3>
+                    <p>Cada cliente é único. Desenvolvemos estratégias sob medida para o seu caso específico.</p>
+                </article>
+
+                <article class="why-card">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-gavel" aria-hidden="true"></i>
+                    </div>
+                    <h3>Experiência Comprovada</h3>
+                    <p>Anos de atuação combativa em Direito Bancário e Previdenciário com resultados expressivos.</p>
+                </article>
+
+                <article class="why-card">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-comments" aria-hidden="true"></i>
+                    </div>
+                    <h3>Transparência Total</h3>
+                    <p>Mantemos você informado em cada etapa do processo. Sem surpresas, sem letras miúdas.</p>
+                </article>
+
+                <article class="why-card">
+                    <div class="why-icon">
+                        <i class="fa-solid fa-clock" aria-hidden="true"></i>
+                    </div>
+                    <h3>Agilidade no Atendimento</h3>
+                    <p>Respostas rápidas e acompanhamento constante. Seu tempo é valioso para nós.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section how-it-works-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como Funciona?</h2>
+                <p>Processo simples e transparente em 4 etapas</p>
+            </div>
+
+            <div class="steps-wrapper">
+                <article class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                    </div>
+                    <h3>Agendamento</h3>
+                    <p>Entre em contato via WhatsApp ou telefone e agende sua consulta inicial.</p>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                    </div>
+                    <h3>Análise</h3>
+                    <p>Avaliamos seu caso detalhadamente e apresentamos as melhores estratégias.</p>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fa-solid fa-file-signature" aria-hidden="true"></i>
+                    </div>
+                    <h3>Ação</h3>
+                    <p>Iniciamos as medidas jurídicas necessárias com total transparência.</p>
+                </article>
+
+                <article class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fa-solid fa-trophy" aria-hidden="true"></i>
+                    </div>
+                    <h3>Resultado</h3>
+                    <p>Acompanhamos até a conquista do seu direito e solução do problema.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Blog Carousel Functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.blog-slide');
+        const dots = document.querySelectorAll('.blog-dot');
+        const totalSlides = slides.length;
+
+        // Auto-play interval
+        let autoPlayInterval;
+
+        function showSlide(index) {
+            if (totalSlides === 0) return;
+
+            // Normalize index
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            // Update slides
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+
+            // Update dots
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+
+            // Reset auto-play timer
+            resetAutoPlay();
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        function nextSlide() {
+            changeSlide(1);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+
+        // Initialize auto-play
+        if (totalSlides > 0) {
+            resetAutoPlay();
+        }
+
+        // Pause on hover
+        const carousel = document.querySelector('.blog-hero');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(autoPlayInterval);
+            });
+
+            carousel.addEventListener('mouseleave', () => {
+                resetAutoPlay();
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        if (carousel) {
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swiped left - next slide
+                    changeSlide(1);
+                } else {
+                    // Swiped right - previous slide
+                    changeSlide(-1);
+                }
+            }
+        }
+    </script>
+{% endblock %}

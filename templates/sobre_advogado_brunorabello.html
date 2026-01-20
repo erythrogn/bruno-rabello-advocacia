@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}O Escritório | Bruno Rabello Advocacia{% endblock %}
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sobre.css') }}">
+{% endblock %}
+{% block content %}
+
+<section class="section about-section">
+    <div class="container">
+        <div class="about-grid-full">
+            <div class="about-img-wrapper">
+                <img src="{{ url_for('static', filename='images/bruno.jpg') }}" 
+                     alt="Dr. Bruno Rabello - Advogado especialista em Direito Bancário e Previdenciário"
+                     loading="lazy">
+            </div>
+            
+            <div class="about-content">
+                 <h1></h1>
+                 <h1></h1>
+                <span class="subtitle">PERFIL PROFISSIONAL</span>
+                <h2>Dr. Bruno Rabello</h2>
+                
+                <p>Fundado pelo Dr. Bruno Rabello, especialista em Direito Bancário e Previdenciário, o escritório nasceu com o propósito de ser mais do que um espaço jurídico: somos parceiros na defesa dos seus direitos e na proteção do que realmente importa — sua vida, sua família e seu patrimônio.
+Com atuação firme e ética, o Dr. Bruno se destaca na luta contra abusos de instituições financeiras e na busca por benefícios previdenciários justos junto ao INSS.
+</p>
+                
+                <p>O escritório <strong>Bruno Rabello Advocacia</strong> nasceu com o propósito de oferecer um atendimento humanizado e técnico. Localizado estrategicamente no centro de Jacundá/PA, oferecemos estrutura moderna e transparente. Entendemos que por trás de cada processo existe uma vida, uma família e um patrimônio a ser preservado.</p>
+
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <strong>Especialista</strong> 
+                        <span>Bancário e INSS</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>Atuação</strong>
+                        <span>Estado do Pará</span>
+                    </div>
+                </div>
+                
+                <a href="{{ url_for('contato') }}" class="btn btn-dark">
+                    <span>Agendar Consulta</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt values-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Nossa Identidade</h2>
+            <p>Conheça os princípios que guiam nossa atuação</p>
+        </div>
+
+        <div class="values-grid">
+            
+            <div class="value-card">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <h3>Missão</h3>
+                <p>Oferecer um atendimento humanizado e técnico, unindo conhecimento jurídico sólido com sensibilidade às necessidades de cada cliente.
+</p>
+            </div>
+
+            <div class="value-card">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                <h3>Nossa estrutura</h3>
+                <p>Localizados estrategicamente no centro de Jacundá/PA, contamos com um ambiente moderno, transparente e acolhedor, pensado para transmitir confiança e segurança em cada etapa do processo.
+</p>
+            </div>
+
+            <div class="value-card">
+                <i class="fa fa-balance-scale" aria-hidden="true"></i>
+                <h3>Nosso Diferencial</h3>
+                <ul class="value-list">
+                    <li><i class="fa fa-check" aria-hidden="true"></i> Defesa combativa dos direitos dos consumidores</li>
+                    <li><i class="fa fa-check" aria-hidden="true"></i> Garantia de benefícios previdenciários justos</li>
+                    <li><i class="fa fa-check" aria-hidden="true"></i> Atendimento personalizado e próximo</li>
+                    <li><i class="fa fa-check" aria-hidden="true"></i> Estrutura moderna e transparente</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

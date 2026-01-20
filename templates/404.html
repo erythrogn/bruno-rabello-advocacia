@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Página Não Encontrada | Bruno Rabello Advocacia{% endblock %}
+
+{% block head_css %}
+    <style>
+        .error-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        
+        .error-content {
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 30px rgba(197, 164, 126, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+        }
+        
+        .error-text {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        
+        .error-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<section class="error-page">
+    <div class="container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Página Não Encontrada</h1>
+            <p class="error-text">
+                Desculpe, a página que você está procurando não existe ou foi movida.
+                Mas não se preocupe, podemos ajudá-lo a encontrar o que precisa!
+            </p>
+            
+            <div class="error-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fa fa-home"></i> 
+                    <span>Voltar ao Início</span>
+                </a>
+                <a href="{{ url_for('contato') }}" class="btn btn-dark">
+                    <i class="fa fa-envelope"></i> 
+                    <span>Fale Conosco</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

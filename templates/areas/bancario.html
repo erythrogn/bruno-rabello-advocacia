@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Direito Bancário | Bruno Rabello Advocacia{% endblock %}
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/servicos.css') }}">
+{% endblock %}
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>Direito Bancário</h1>
+        <p>Defesa contra juros abusivos e práticas ilegais das instituições financeiras.</p>
+    </div>
+</section>
+
+<section class="section contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="content-text">
+                <h2>O banco está cobrando mais do que deve?</h2>
+                <p>Muitos brasileiros sofrem com a cobrança de juros abusivos em empréstimos consignados, financiamentos de veículos e cartões de crédito. O escritório Bruno Rabello atua para equilibrar essa relação e devolver seu poder de compra.</p>
+                
+                <h3>Principais Áreas de Atuação</h3>
+                <ul class="service-list">
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Revisão de Juros Abusivos</strong>
+                            <p>Análise detalhada de contratos para identificação de cobranças indevidas e redução de parcelas.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Busca e Apreensão de Veículos</strong>
+                            <p>Defesa urgente para impedir a perda do seu bem e renegociação de dívidas.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Golpes e Fraudes Bancárias</strong>
+                            <p>Ação indenizatória contra empréstimos não solicitados ou golpes via PIX/WhatsApp.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Superendividamento</strong>
+                            <p>Renegociação judicial de dívidas que comprometem sua sobrevivência e dignidade.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="cta-box">
+                    <h4>Analise seu contrato hoje mesmo</h4>
+                    <p>Não espere a dívida virar uma bola de neve. Entre em contato para uma avaliação preliminar do seu caso sem compromisso.</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20tenho%20um%20problema%20bancário%20e%20gostaria%20de%20uma%20análise." 
+                       class="btn btn-dark" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Falar com advogado pelo WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>Falar com Advogado</span>
+                    </a>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="info-card">
+                    <h3>Outras Áreas</h3>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('consumidor') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito do Consumidor
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('previdenciario') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito Previdenciário
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-card sidebar-info">
+                    <h4>Precisa de Ajuda?</h4>
+                    <p>Entre em contato agora e proteja seus direitos</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." 
+                       class="btn btn-whatsapp-minimal" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

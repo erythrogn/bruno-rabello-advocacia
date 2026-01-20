@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Direito Previdenciário | Bruno Rabello Advocacia{% endblock %}
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/servicos.css') }}">
+{% endblock %}
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>Direito Previdenciário</h1>
+        <p>Garantindo seu direito ao melhor benefício possível junto ao INSS.</p>
+    </div>
+</section>
+
+<section class="section contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            
+            <div class="content-text">
+                <h2>Você merece o melhor benefício do INSS</h2>
+                <p>A aposentadoria é um direito conquistado após anos de trabalho. O escritório Bruno Rabello analisa minuciosamente seu histórico profissional para garantir que você receba o benefício mais vantajoso possível, seja por idade, tempo de contribuição ou atividade especial.</p>
+                
+                <h3>Principais Áreas de Atuação</h3>
+                <ul class="service-list">
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Aposentadorias (Idade, Tempo, Especial)</strong>
+                            <p>Planejamento e concessão do melhor tipo de aposentadoria para o seu caso específico.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Auxílio-Doença e Acidente</strong>
+                            <p>Defesa quando o INSS nega ou cancela indevidamente seu benefício por incapacidade.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>BPC / LOAS (Idoso e Deficiente)</strong>
+                            <p>Benefício assistencial para quem nunca contribuiu mas precisa de amparo social.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Planejamento Previdenciário</strong>
+                            <p>Análise antecipada do seu histórico para maximizar o valor do benefício futuro.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        <div>
+                            <strong>Revisão de Benefícios</strong>
+                            <p>Verificação de cálculos e inclusão de períodos não considerados pelo INSS.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="cta-box">
+                    <h4>Descubra qual benefício você tem direito</h4>
+                    <p>Cada caso é único. Faça uma análise personalizada do seu histórico previdenciário e descubra a melhor estratégia para sua aposentadoria.</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20gostaria%20de%20fazer%20um%20planejamento%20previdenciário." 
+                       class="btn btn-dark" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="Falar com advogado pelo WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>Fazer Análise Gratuita</span>
+                    </a>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="info-card">
+                    <h3>Outras Áreas</h3>
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('bancario') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito Bancário
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('consumidor') }}">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i> 
+                                Direito do Consumidor
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-card sidebar-info">
+                    <h4>Precisa de Ajuda?</h4>
+                    <p>Entre em contato agora e garanta seus direitos</p>
+                    <a href="https://wa.me/5594992055378?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." 
+                       class="btn btn-whatsapp-minimal" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> 
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

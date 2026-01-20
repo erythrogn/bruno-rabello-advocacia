@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Contato | Bruno Rabello Advocacia{% endblock %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contato.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="page-header-minimal">
+        <div class="container">
+            <h1>Entre em Contato</h1>
+        </div>
+    </section>
+
+    <section class="section contact-minimal">
+        <div class="container">
+            <div class="contact-grid-minimal">
+                <div class="contact-info-section">
+                    <div class="info-group">
+                        <div class="info-item-minimal">
+                            <span class="label">Telefone</span>
+                            <a href="tel:+5594992055378">(94) 99205-5378</a>
+                        </div>
+
+                        <div class="info-item-minimal">
+                            <span class="label">Email</span>
+                            <a href="mailto:contato@brunorabello.com.br">contato@brunorabello.com.br</a>
+                        </div>
+
+                        <div class="info-item-minimal">
+                            <span class="label">Instagram</span>
+                            <a href="https://www.instagram.com/brunorabelloadvocacia" 
+                               target="_blank" 
+                               rel="noopener noreferrer">@brunorabelloadvocacia</a>
+                        </div>
+
+                        <div class="info-item-minimal">
+                            <span class="label">Endereço</span>
+                            <address>
+                                Av. Cristo Rei, 485<br>
+                                Centro, Jacundá/PA<br>
+                                CEP: 68590-000
+                            </address>
+                        </div>
+                    </div>
+
+                    <div class="whatsapp-cta-minimal">
+                        <a href="https://wa.me/5594992055378?text=Olá,%20vim%20pelo%20site%20e%20gostaria%20de%20falar%20sobre%20meu%20caso." 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn-whatsapp-minimal"
+                           aria-label="Conversar pelo WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-wrapper-minimal">
+                    <h2>Envie sua mensagem</h2>
+                    
+                    <form class="form-minimal" 
+                          action="https://formsubmit.co/contato@brunorabello.com.br" 
+                          method="POST"
+                          novalidate
+                          id="contactForm">
+                        <input type="hidden" name="_next" value="{{ url_for('contato', _external=True) }}?status=success">
+                        <input type="hidden" name="_subject" value="Novo contato - Bruno Rabello Advocacia">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+
+                        <div class="form-field">
+                            <input type="text" 
+                                   id="nome" 
+                                   name="nome" 
+                                   placeholder="Nome completo" 
+                                   required
+                                   autocomplete="name">
+                        </div>
+
+                        <div class="form-field">
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   placeholder="Email" 
+                                   required
+                                   autocomplete="email">
+                        </div>
+
+                        <div class="form-field">
+                            <input type="tel" 
+                                   id="telefone" 
+                                   name="telefone" 
+                                   placeholder="Telefone (com DDD)" 
+                                   required
+                                   autocomplete="tel">
+                        </div>
+
+                        <div class="form-field">
+                            <textarea id="mensagem" 
+                                      name="mensagem" 
+                                      rows="6" 
+                                      placeholder="Conte-nos brevemente sobre seu caso" 
+                                      required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-send">
+                            <span>Enviar Mensagem</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="map-minimal">
+                <iframe 
+                    title="Localização do Escritório Bruno Rabello Advocacia em Jacundá/PA"
+                    src="https://maps.google.com/maps?q=Av.+Cristo+Rei,+485,+Centro,+Jacundá+PA&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Verifica se há mensagem de sucesso na URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('status') === 'success') {
+            alert("✅ Mensagem enviada com sucesso! Retornaremos em breve.");
+            window.history.replaceState(null, null, window.location.pathname);
+        }
+
+        // Validação simples do formulário
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', function(e) {
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const mensagem = document.getElementById('mensagem').value.trim();
+
+            if (!nome || !email || !telefone || !mensagem) {
+                e.preventDefault();
+                alert('Por favor, preencha todos os campos.');
+                return false;
+            }
+
+            // Validação básica de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                e.preventDefault();
+                alert('Por favor, insira um email válido.');
+                return false;
+            }
+        });
+    </script>
+{% endblock %}

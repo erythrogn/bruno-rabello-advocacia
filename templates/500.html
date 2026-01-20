@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Erro Interno | Bruno Rabello Advocacia{% endblock %}
+
+{% block head_css %}
+    <style>
+        .error-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+        
+        .error-content {
+            max-width: 600px;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 30px rgba(197, 164, 126, 0.3);
+            animation: shake 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+        }
+        
+        .error-text {
+            color: var(--text-body);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        
+        .error-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<section class="error-page">
+    <div class="container">
+        <div class="error-content">
+            <div class="error-code">500</div>
+            <h1 class="error-title">Erro Interno do Servidor</h1>
+            <p class="error-text">
+                Desculpe, algo deu errado no nosso servidor.
+                Nossa equipe já foi notificada e está trabalhando para resolver o problema.
+                Por favor, tente novamente em alguns minutos.
+            </p>
+            
+            <div class="error-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fa fa-home"></i> 
+                    <span>Voltar ao Início</span>
+                </a>
+                <a href="https://wa.me/5594992055378" 
+                   class="btn btn-dark"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <i class="fa-brands fa-whatsapp"></i> 
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

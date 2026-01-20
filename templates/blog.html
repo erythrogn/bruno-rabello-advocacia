@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Artigos Jurídicos | Bruno Rabello Advocacia{% endblock %}
+{% block description %}Artigos especializados sobre direito bancário, previdenciário e do consumidor. Acompanhe análises, dicas e novidades jurídicas com o Dr. Bruno Rabello.{% endblock %}
+
+{% block head_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="section blog-section" aria-labelledby="blog-title">
+    <div class="container">
+        
+        <!-- Blog Header -->
+        <div class="blog-intro">
+            <h1 id="blog-title">Artigos e Notícias Jurídicas</h1>
+            <p>Acompanhe nossas atualizações sobre Direito Bancário, Previdenciário e do Consumidor.</p>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            {% if posts %}
+                {% for post in posts %}
+                <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                    <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" aria-label="Ler artigo: {{ post.title }}">
+                        
+                        <!-- Blog Image -->
+                        <div class="blog-image">
+                            {% if post.imageUrl %}
+                                <img src="{{ post.imageUrl }}" 
+                                     alt="{{ post.title }}" 
+                                     loading="lazy"
+                                     itemprop="image">
+                            {% else %}
+                                <div class="blog-placeholder" aria-hidden="true">
+                                    <i class="fa-solid fa-scale-balanced"></i>
+                                </div>
+                            {% endif %}
+                            
+                            {% if post.category %}
+                            <span class="blog-tag" itemprop="articleSection">{{ post.category }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Blog Content -->
+                        <div class="blog-content">
+                            <h3 itemprop="headline">{{ post.title }}</h3>
+                            
+                            <p class="blog-excerpt" itemprop="description">
+                                {{ post.description }}
+                            </p>
+                            
+                            <!-- Blog Meta -->
+                            <div class="blog-meta">
+                                <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
+                                <time datetime="{{ post.publishedAt }}" itemprop="datePublished">
+                                    {{ post.publishedAt | data_formatada }}
+                                </time>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            {% else %}
+                <!-- Empty State -->
+                <div class="blog-empty">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>Nenhum artigo encontrado</h3>
+                    <p>Estamos preparando novos conteúdos para você. Volte em breve!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Blog CTA -->
+        {% if posts %}
+        <aside class="blog-cta">
+            <h3>Precisa de Orientação Jurídica?</h3>
+            <p>Agende uma consulta com nosso especialista. Avaliamos seu caso e apresentamos as melhores estratégias.</p>
+            <a href="{{ url_for('contato') }}" class="btn btn-primary">
+                <i class="fa-solid fa-comments"></i> 
+                <span>Falar com Advogado</span>
+            </a>
+        </aside>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Efeito de mouse tracking nos cards
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.blog-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+});
+</script>
+{% endblock %}
