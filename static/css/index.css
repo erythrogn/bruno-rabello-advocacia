@@ -12,6 +12,7 @@
     text-align: center;
     color: #fff;
     position: relative;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
 }
 
 .hero::before {
@@ -26,11 +27,15 @@
 }
 
 .hero-content {
+    width: 100%; /* Garante que o container ocupe a largura para centralizar */
     max-width: 900px;
     z-index: 2;
     padding: 0 20px;
-    /* AJUSTE: Valor aumentado para -12vh para subir mais o conteúdo */
-    margin-top: -12vh; 
+    margin-top: -12vh;
+    /* Garante centralização interna */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
 
 /* Estilos para a logo no hero */
@@ -80,6 +85,7 @@
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%; /* Garante largura total no desktop para centralizar */
     animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
@@ -455,34 +461,45 @@
 
 /* ================= RESPONSIVE NAVBAR & GLOBAL ================= */
 @media (max-width: 968px) {
-    /* Navbar Flex Behavior */
+    /* Navbar Flex Behavior - Com posicionamento relativo */
     .navbar {
         display: flex;
-        justify-content: space-between;
+        justify-content: center; /* Centraliza o conteúdo geral */
         align-items: center;
-        flex-direction: row;
         width: 100%;
+        position: relative; /* Base para o absolute */
+        min-height: 70px;
+        padding: 0 1rem;
     }
     
+    /* Centraliza a Logo na força bruta (Absolute) */
     .logo {
         display: flex !important;
         align-items: center;
         z-index: 1002;
-        order: 1;
-        margin-right: auto;
+        position: absolute !important;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0 !important;
+        order: unset;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     .logo-img {
         height: 45px !important;
     }
     
-    /* Mostrar o Toggle Button no Mobile */
+    /* Fixa o menu toggle na direita */
     .menu-toggle { 
         display: flex;
         align-items: center;
         justify-content: center;
-        order: 2;
-        margin-left: auto;
+        z-index: 1002;
+        position: absolute !important;
+        right: 20px;
+        margin: 0 !important;
+        order: unset;
     }
     
     /* Estilo do Menu Lateral (Off-canvas) */
@@ -603,19 +620,30 @@
         padding-top: calc(var(--header-height) + 2rem);
     }
     
+    /* CORREÇÃO DO ALINHAMENTO DO CONTEÚDO HERO NO MOBILE */
+    .hero-content {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1.5rem; /* Um pouco mais de respiro nas laterais */
+    }
+
     .hero-logo {
         max-width: 350px;
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+        margin-left: auto; /* Garante centro */
+        margin-right: auto; /* Garante centro */
     }
 }
 
 @media (max-width: 640px) {
+    /* CORREÇÃO DOS BOTÕES NO MOBILE */
     .hero-btns {
         flex-direction: column;
         width: 100%;
         max-width: 300px;
+        margin: 0 auto; /* FUNDAMENTAL: Centraliza o bloco de botões */
     }
     
     .hero-btns .btn {
