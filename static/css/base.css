@@ -604,17 +604,26 @@ footer::before {
         display: none;
     }
     
-    .logo {
+    .logo,
+    a.logo {
         display: flex !important;
-        align-items: center;
-        position: relative;
-        z-index: 1002;
-        order: 1; 
-        margin-right: auto; 
+        align-items: center !important;
+        position: relative !important;
+        z-index: 1002 !important;
+        order: 1 !important;
+        margin-right: auto !important;
+        margin-left: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
-    .logo-img {
+    .logo-img,
+    .logo img {
         height: 45px !important;
+        width: auto !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     header {
@@ -622,10 +631,10 @@ footer::before {
     }
 
     .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-direction: row; 
-        width: 100%;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        flex-direction: row !important;
+        width: 100% !important;
     }
 }
