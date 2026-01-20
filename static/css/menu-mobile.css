@@ -1,3 +1,4 @@
+/* ================= MOBILE MENU & TOGGLE ================= */
 .menu-toggle {
     display: none;
     background: none;
@@ -34,6 +35,7 @@
     display: inline-block;
 }
 
+/* ================= RESPONSIVE NAVBAR ================= */
 @media (max-width: 968px) {
     .navbar {
         display: flex;
@@ -83,6 +85,7 @@
         visibility: hidden;
     }
     
+    /* Fundo desfocado no topo do menu mobile */
     .nav-links::before {
         content: '';
         position: fixed;
@@ -104,6 +107,7 @@
         visibility: visible;
     }
     
+    /* Animação dos itens do menu */
     .nav-links > li {
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -139,6 +143,7 @@
         overflow: hidden;
     }
     
+    /* Efeito de hover nos links */
     .nav-links > li > a::before {
         content: '';
         position: absolute;
@@ -297,6 +302,7 @@
     }
 }
 
+/* ================= NOTIFICATION & UTILS ================= */
 @keyframes pulse-toggle {
     0%, 100% {
         box-shadow: 0 0 0 0 rgba(197, 164, 126, 0.7);
