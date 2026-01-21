@@ -19,13 +19,6 @@
         <h1 id="post-title" itemprop="headline" class="post-main-title">
             {{ post.title }}
         </h1>
-        
-        <div class="post-meta-wrapper">
-            <div class="meta-date" title="{{ post.publishedAt | data_formatada }}">
-                <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
-                <span>{{ post.publishedAt | data_formatada }}</span>
-            </div>
-        </div>
     </header>
 
     {% if post.imageUrl %}
@@ -40,6 +33,13 @@
     </figure>
     {% endif %}
 
+    <div class="post-meta-wrapper">
+        <div class="meta-date" title="{{ post.publishedAt | data_formatada }}">
+            <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
+            <span>{{ post.publishedAt | data_formatada }}</span>
+        </div>
+    </div>
+
     <div id="post-content" class="post-content" itemprop="articleBody" role="main">
         <div class="content-loading" id="contentLoading">
             <div class="loading-spinner">
@@ -48,6 +48,7 @@
             <p>Carregando conteúdo...</p>
         </div>
     </div>
+
 <section class="blog-cta-section">
     <div class="container">
         <div class="blog-cta">
@@ -60,7 +61,6 @@
         </div>
     </div>
 </section>
-
     <nav class="btn-voltar-container" aria-label="Navegação do blog">
         <a href="{{ url_for('blog') }}" class="btn-voltar">
             <i class="fa-solid fa-arrow-left"></i> 
@@ -75,7 +75,6 @@
             <a href="https://wa.me/?text={{ post.title }}%20{{ request.url }}" target="_blank" rel="noopener noreferrer" class="share-btn share-whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
     </aside>
-
 </article>
 
 
