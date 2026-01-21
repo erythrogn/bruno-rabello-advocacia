@@ -53,36 +53,36 @@
                 {% endif %}
                 
                 <div class="blog-slide-content">
-                    <div class="container">
-                        <div class="blog-slide-inner">
-                            {% if post.category %}
-                            <span class="blog-slide-category">{{ post.category }}</span>
+                    <div class="blog-slide-inner">
+                        {% if post.category %}
+                        <span class="blog-slide-category">{{ post.category }}</span>
+                        {% endif %}
+                        
+                        <h2 class="blog-slide-title">{{ post.title }}</h2>
+                        
+                        {% if post.excerpt %}
+                        <p class="blog-slide-description">{{ post.excerpt }}</p>
+                        {% endif %}
+                        
+                        <div class="blog-slide-meta">
+                            <span>
+                                <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                                {{ post.publishedAt | data_formatada }}
+                            </span>
+                            {% if post.author %}
+                            <span>
+                                <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+                                {{ post.author }}
+                            </span>
                             {% endif %}
-                            
-                            <h2 class="blog-slide-title">{{ post.title }}</h2>
-                            
-                            <p class="blog-slide-description">{{ post.description }}</p>
-                            
-                            <div class="blog-slide-meta">
-                                <span>
-                                    <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                                    {{ post.publishedAt | data_formatada }}
-                                </span>
-                                {% if post.author %}
-                                <span>
-                                    <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
-                                    {{ post.author }}
-                                </span>
-                                {% endif %}
-                            </div>
-                            
-                            <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
-                               class="blog-slide-btn"
-                               aria-label="Ler artigo completo: {{ post.title }}">
-                                <span>Ler Artigo</span>
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            </a>
                         </div>
+                        
+                        <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
+                           class="blog-slide-btn"
+                           aria-label="Ler artigo completo: {{ post.title }}">
+                            <span>Ler Artigo</span>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
                     </div>
                 </div>
             </div>

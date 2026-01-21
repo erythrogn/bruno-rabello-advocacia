@@ -60,6 +60,93 @@ client = SanityClient(
 
 # --- FUNÇÕES AUXILIARES ---
 
+def generate_excerpt(portable_text_body, max_lines=2, max_chars=150):
+    """
+    Gera um excerpt (resumo) das primeiras linhas de um corpo em Portable Text.
+    
+    Args:
+        portable_text_body (list): Array de blocos do Portable Text (post.body)
+        max_lines (int): Número máximo de linhas/parágrafos a incluir
+        max_chars (int): Número máximo de caracteres
+        
+    Returns:
+        str: Texto do excerpt com "..." no final
+    """
+    if not portable_text_body or not isinstance(portable_text_body, list):
+        return ""
+    
+    text_parts = []
+    lines_count = 0
+    
+    for block in portable_text_body:
+        # Para em tipos que não sejam texto normal
+        if block.get('_type') != 'block':
+            continue
+            
+        # Para se já pegamos as linhas necessárias
+        if lines_count >= max_lines:
+            break
+        
+        # Extrai o texto dos children do bloco
+        children = block.get('children', [])
+        block_text = ""
+        
+        for child in children:
+            if child.get('_type') == 'span':
+                block_text += child.get('text', '')
+        
+        # Adiciona o texto se não estiver vazio
+        if block_text.strip():
+            text_parts.append(block_text.strip())
+            lines_count += 1
+    
+    # Junta as partes
+    full_text = " ".join(text_parts)
+    
+    # Limita o tamanho se necessário
+    if len(full_text) > max_chars:
+        full_text = full_text[:max_chars].rsplit(' ', 1)[0]
+    
+    # Adiciona "..." no final
+    if full_text:
+        return full_text + "..."
+    
+    return ""
+
+
+def add_excerpt_to_post(post):
+    """
+    Adiciona excerpt a um post se ele não tiver description.
+    Prioriza description manual, mas gera excerpt automático se não existir.
+    """
+    if not post:
+        return post
+    
+    # Se não tiver description ou description for None/vazia, gera excerpt do body
+    description = post.get('description')
+    if not description or description == 'None' or str(description).strip() == '':
+        excerpt = generate_excerpt(post.get('body', []))
+        post['excerpt'] = excerpt if excerpt else ''
+    else:
+        # Usa description como excerpt se ela existir
+        post['excerpt'] = description
+    
+    return post
+
+
+def add_excerpt_to_posts(posts):
+    """
+    Adiciona excerpt a uma lista de posts.
+    """
+    if not posts:
+        return []
+    
+    for post in posts:
+        add_excerpt_to_post(post)
+    
+    return posts
+
+
 # Filtro para formatar data no HTML (Ex: 16 JAN 2026)
 @app.template_filter('data_formatada')
 def data_formatada(value):
@@ -82,12 +169,17 @@ def index():
       slug,
       publishedAt,
       description,
+      body,
       "category": categories[0]->title,
       "imageUrl": mainImage.asset->url,
       "author": author->name
     }
     """
     posts = client.fetch(query) or []
+    
+    # Adiciona excerpt a todos os posts
+    posts = add_excerpt_to_posts(posts)
+    
     return render_template('index.html', posts=posts)
 
 # Rotas Institucionais
@@ -109,12 +201,17 @@ def blog():
       slug,
       publishedAt,
       description,
+      body,
       "category": categories[0]->title,
       "imageUrl": mainImage.asset->url,
       "author": author->name
     }
     """
-    posts = client.fetch(query) or [] # Garante que retorna lista vazia se der erro
+    posts = client.fetch(query) or []
+    
+    # Adiciona excerpt a todos os posts
+    posts = add_excerpt_to_posts(posts)
+    
     return render_template('blog.html', posts=posts)
 
 # Rota de Detalhe do Post
@@ -137,6 +234,9 @@ def post_detalhe(slug):
     post = client.fetch(query, {'slug': slug})
     
     if post:
+        # Adiciona excerpt ao post
+        post = add_excerpt_to_post(post)
+        
         # Busca posts relacionados (mesma categoria)
         if post.get('category'):
             related_query = """
@@ -145,11 +245,15 @@ def post_detalhe(slug):
               slug,
               publishedAt,
               description,
+              body,
               "category": categories[0]->title,
               "imageUrl": mainImage.asset->url
             }
             """
             related_posts = client.fetch(related_query, {'category': post['category'], 'slug': slug}) or []
+            
+            # Adiciona excerpt aos posts relacionados
+            related_posts = add_excerpt_to_posts(related_posts)
         else:
             related_posts = []
         

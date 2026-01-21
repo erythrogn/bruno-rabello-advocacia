@@ -1,0 +1,161 @@
+/* ================= SEO ELEMENTS - BREADCRUMB & READING TIME ================= */
+
+/* --- Breadcrumb --- */
+.breadcrumb-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: calc(var(--header-height) + 1rem) 20px 0;
+}
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.breadcrumb li {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb li:not(:last-child)::after {
+    content: '›';
+    margin: 0 8px;
+    color: var(--accent-gold);
+    font-size: 1.2rem;
+}
+
+.breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition);
+    position: relative;
+}
+
+.breadcrumb a:hover {
+    color: var(--accent-gold);
+}
+
+.breadcrumb a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.3s ease;
+}
+
+.breadcrumb a:hover::after {
+    width: 100%;
+}
+
+.breadcrumb li:last-child span {
+    color: var(--heading-color);
+    font-weight: 500;
+}
+
+/* --- Reading Time --- */
+.reading-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+    padding: 8px 16px;
+    background: rgba(197, 164, 126, 0.05);
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+}
+
+.reading-time i {
+    color: var(--accent-gold);
+    font-size: 1rem;
+}
+
+/* --- Meta Updated Time --- */
+.meta-updated {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.meta-updated i {
+    color: var(--accent-gold-light);
+}
+
+/* --- Twitter Share Button --- */
+.share-twitter {
+    background: rgba(29, 161, 242, 0.1);
+    color: #1DA1F2;
+    border-color: rgba(29, 161, 242, 0.3);
+}
+
+.share-twitter:hover {
+    background: #1DA1F2;
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(29, 161, 242, 0.4);
+    transform: translateY(-3px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .breadcrumb-container {
+        padding: calc(var(--header-height) + 0.5rem) 15px 0;
+    }
+    
+    .breadcrumb {
+        font-size: 0.85rem;
+    }
+    
+    .breadcrumb li:not(:last-child)::after {
+        margin: 0 6px;
+        font-size: 1.1rem;
+    }
+    
+    .reading-time {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb {
+        font-size: 0.8rem;
+    }
+    
+    .breadcrumb li:not(:last-child)::after {
+        margin: 0 4px;
+        font-size: 1rem;
+    }
+    
+    .reading-time {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        margin-top: 0.5rem;
+    }
+    
+    .meta-updated {
+        font-size: 0.8rem;
+    }
+}
+
+/* ================= PRINT STYLES ================= */
+@media print {
+    .breadcrumb-container,
+    .reading-time,
+    .post-share {
+        display: none;
+    }
+}

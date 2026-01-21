@@ -46,17 +46,21 @@
                         <div class="blog-content">
                             <h3 itemprop="headline">{{ post.title }}</h3>
                             
+                            {% if post.excerpt %}
                             <p class="blog-excerpt" itemprop="description">
-                                {{ post.description }}
+                                {{ post.excerpt }}
                             </p>
+                            {% endif %}
                             
-                            <!-- Blog Meta -->
+                            <!-- Blog Meta - Só aparece se tiver data -->
+                            {% if post.publishedAt %}
                             <div class="blog-meta">
                                 <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
                                 <time datetime="{{ post.publishedAt }}" itemprop="datePublished">
                                     {{ post.publishedAt | data_formatada }}
                                 </time>
                             </div>
+                            {% endif %}
                         </div>
                     </a>
                 </article>

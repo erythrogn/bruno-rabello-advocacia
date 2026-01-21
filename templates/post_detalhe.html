@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}{{ post.title }} | Blog | Bruno Rabello Advocacia{% endblock %}
-{% block description %}{{ post.description if post.description else post.title }}{% endblock %}
+{% block description %}{{ post.excerpt if post.excerpt else post.title }}{% endblock %}
 
 {% block head_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
@@ -20,16 +20,19 @@
             {{ post.title }}
         </h1>
         
-        <div class="meta-date" title="{{ post.publishedAt | data_formatada }}">
-            <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
-        </div>
+        <div class="post-meta-wrapper">
+            <div class="meta-date" title="{{ post.publishedAt | data_formatada }}">
+                <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
+                <span>{{ post.publishedAt | data_formatada }}</span>
+            </div>
 
-        {% if post.author %}
-        <div class="meta-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <i class="fa-solid fa-user-pen" aria-hidden="true"></i> 
-            <span itemprop="name">Por {{ post.author }}</span>
+            {% if post.author %}
+            <div class="meta-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <i class="fa-solid fa-user-pen" aria-hidden="true"></i> 
+                <span itemprop="name">Por {{ post.author }}</span>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
     </header>
 
     {% if post.imageUrl %}
@@ -85,7 +88,7 @@
                     </div>
                     <div class="blog-content">
                         <h4>{{ related_post.title }}</h4>
-                        <p class="blog-excerpt">{{ related_post.description }}</p>
+                        <p class="blog-excerpt">{{ related_post.excerpt }}</p>
                     </div>
                 </a>
             </article>
@@ -114,7 +117,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "{{ post.title }}",
-  "description": "{{ post.description if post.description else post.title }}",
+  "description": "{{ post.excerpt if post.excerpt else post.title }}",
   "image": "{{ post.imageUrl if post.imageUrl else url_for('static', filename='images/logo_sem_nome.png', _external=True) }}",
   "datePublished": "{{ post.publishedAt }}",
   "dateModified": "{{ post.updatedAt if post.updatedAt else post.publishedAt }}",
