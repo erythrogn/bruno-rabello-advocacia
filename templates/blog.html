@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Artigos Jurídicos | Bruno Rabello Advocacia{% endblock %}
-{% block description %}Artigos especializados sobre direito bancário, previdenciário e do consumidor. Acompanhe análises, dicas e novidades jurídicas com o Dr. Bruno Rabello.{% endblock %}
+{% block title %}Artigos JurÃ­dicos | Bruno Rabello Advocacia{% endblock %}
+{% block description %}Artigos especializados sobre direito bancÃ¡rio, previdenciÃ¡rio e do consumidor. Acompanhe anÃ¡lises, dicas e novidades jurÃ­dicas com o Dr. Bruno Rabello.{% endblock %}
 
 {% block head_css %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
@@ -13,12 +13,12 @@
         
         <!-- Blog Header -->
         <div class="blog-intro">
-            <h1 id="blog-title">Artigos e Notícias Jurídicas</h1>
-            <p>Acompanhe nossas atualizações sobre Direito Bancário, Previdenciário e do Consumidor.</p>
+            <h1 id="blog-title">Artigos e NotÃ­cias JurÃ­dicas</h1>
+            <p>Acompanhe nossas atualizaÃ§Ãµes sobre Direito BancÃ¡rio, PrevidenciÃ¡rio e do Consumidor.</p>
         </div>
 
         <!-- Blog Grid -->
-        <div class="blog-grid">
+        <div class="blog-grid" id="blogGrid">
             {% if posts %}
                 {% for post in posts %}
                 <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
@@ -52,7 +52,7 @@
                             </p>
                             {% endif %}
                             
-                            <!-- Blog Meta - Só aparece se tiver data -->
+                            <!-- Blog Meta - SÃ³ aparece se tiver data -->
                             {% if post.publishedAt %}
                             <div class="blog-meta">
                                 <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
@@ -70,16 +70,31 @@
                 <div class="blog-empty">
                     <i class="fa-solid fa-book-open"></i>
                     <h3>Nenhum artigo encontrado</h3>
-                    <p>Estamos preparando novos conteúdos para você. Volte em breve!</p>
+                    <p>Estamos preparando novos conteÃºdos para vocÃª. Volte em breve!</p>
                 </div>
             {% endif %}
         </div>
 
+        <!-- Pagination -->
+        {% if posts and posts|length > 6 %}
+        <nav class="blog-pagination" aria-label="NavegaÃ§Ã£o de pÃ¡ginas do blog">
+            <button class="pagination-btn pagination-prev" onclick="changePage(-1)" aria-label="PÃ¡gina anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <div class="pagination-numbers" id="paginationNumbers"></div>
+            
+            <button class="pagination-btn pagination-next" onclick="changePage(1)" aria-label="PrÃ³xima pÃ¡gina">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </nav>
+        {% endif %}
+
         <!-- Blog CTA -->
         {% if posts %}
         <aside class="blog-cta">
-            <h3>Precisa de Orientação Jurídica?</h3>
-            <p>Agende uma consulta com nosso especialista. Avaliamos seu caso e apresentamos as melhores estratégias.</p>
+            <h3>Precisa de OrientaÃ§Ã£o JurÃ­dica?</h3>
+            <p>Agende uma consulta com nosso especialista. Avaliamos seu caso e apresentamos as melhores estratÃ©gias.</p>
             <a href="{{ url_for('contato') }}" class="btn btn-primary">
                 <i class="fa-solid fa-comments"></i> 
                 <span>Falar com Advogado</span>
@@ -93,8 +108,15 @@
 
 {% block scripts %}
 <script>
-// Efeito de mouse tracking nos cards
+// ConfiguraÃ§Ã£o de paginaÃ§Ã£o
+const POSTS_PER_PAGE = 6;
+let currentPage = 1;
+let allCards = [];
+let totalPages = 1;
+
+// InicializaÃ§Ã£o
 document.addEventListener('DOMContentLoaded', function() {
+    // Efeito de mouse tracking nos cards
     const cards = document.querySelectorAll('.blog-card');
     
     cards.forEach(card => {
@@ -107,6 +129,138 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.setProperty('--mouse-y', `${y}%`);
         });
     });
+
+    // Inicializar paginaÃ§Ã£o
+    initPagination();
 });
+
+function initPagination() {
+    allCards = Array.from(document.querySelectorAll('.blog-card'));
+    totalPages = Math.ceil(allCards.length / POSTS_PER_PAGE);
+    
+    if (totalPages <= 1) {
+        return; // NÃ£o precisa de paginaÃ§Ã£o
+    }
+    
+    renderPagination();
+    showPage(1);
+}
+
+function showPage(page) {
+    if (page < 1 || page > totalPages) return;
+    
+    currentPage = page;
+    
+    // Esconder todos os cards
+    allCards.forEach(card => {
+        card.style.display = 'none';
+    });
+    
+    // Mostrar apenas os cards da pÃ¡gina atual
+    const start = (page - 1) * POSTS_PER_PAGE;
+    const end = start + POSTS_PER_PAGE;
+    
+    for (let i = start; i < end && i < allCards.length; i++) {
+        allCards[i].style.display = 'flex';
+    }
+    
+    // Atualizar botÃµes de paginaÃ§Ã£o
+    updatePaginationButtons();
+    
+    // Scroll suave para o topo do grid
+    document.getElementById('blogGrid').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+    });
+}
+
+function renderPagination() {
+    const container = document.getElementById('paginationNumbers');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    // LÃ³gica para mostrar pÃ¡ginas
+    const maxVisible = 10;
+    let startPage = 1;
+    let endPage = totalPages;
+    
+    if (totalPages > maxVisible) {
+        if (currentPage <= 6) {
+            endPage = maxVisible;
+        } else if (currentPage >= totalPages - 5) {
+            startPage = totalPages - maxVisible + 1;
+        } else {
+            startPage = currentPage - 5;
+            endPage = currentPage + 4;
+        }
+    }
+    
+    // BotÃ£o primeira pÃ¡gina (se necessÃ¡rio)
+    if (startPage > 1) {
+        addPageButton(container, 1);
+        if (startPage > 2) {
+            addEllipsis(container);
+        }
+    }
+    
+    // BotÃµes de pÃ¡ginas
+    for (let i = startPage; i <= endPage; i++) {
+        addPageButton(container, i);
+    }
+    
+    // BotÃ£o Ãºltima pÃ¡gina (se necessÃ¡rio)
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            addEllipsis(container);
+        }
+        addPageButton(container, totalPages);
+    }
+}
+
+function addPageButton(container, pageNum) {
+    const btn = document.createElement('button');
+    btn.className = 'pagination-btn pagination-number';
+    btn.textContent = pageNum;
+    btn.onclick = () => showPage(pageNum);
+    btn.setAttribute('aria-label', `Ir para pÃ¡gina ${pageNum}`);
+    
+    if (pageNum === currentPage) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-current', 'page');
+    }
+    
+    container.appendChild(btn);
+}
+
+function addEllipsis(container) {
+    const ellipsis = document.createElement('span');
+    ellipsis.className = 'pagination-ellipsis';
+    ellipsis.textContent = '...';
+    ellipsis.setAttribute('aria-hidden', 'true');
+    container.appendChild(ellipsis);
+}
+
+function updatePaginationButtons() {
+    const prevBtn = document.querySelector('.pagination-prev');
+    const nextBtn = document.querySelector('.pagination-next');
+    
+    if (prevBtn) {
+        prevBtn.disabled = currentPage === 1;
+    }
+    
+    if (nextBtn) {
+        nextBtn.disabled = currentPage === totalPages;
+    }
+    
+    renderPagination();
+}
+
+function changePage(direction) {
+    const newPage = currentPage + direction;
+    if (newPage >= 1 && newPage <= totalPages) {
+        showPage(newPage);
+    }
+}
 </script>
 {% endblock %}
