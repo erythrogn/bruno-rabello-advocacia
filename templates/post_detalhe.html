@@ -25,13 +25,6 @@
                 <i class="fa-regular fa-calendar" aria-hidden="true"></i> 
                 <span>{{ post.publishedAt | data_formatada }}</span>
             </div>
-
-            {% if post.author %}
-            <div class="meta-author" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                <i class="fa-solid fa-user-pen" aria-hidden="true"></i> 
-                <span itemprop="name">Por {{ post.author }}</span>
-            </div>
-            {% endif %}
         </div>
     </header>
 
@@ -55,7 +48,6 @@
             <p>Carregando conteúdo...</p>
         </div>
     </div>
-
 <section class="blog-cta-section">
     <div class="container">
         <div class="blog-cta">
@@ -68,6 +60,13 @@
         </div>
     </div>
 </section>
+
+    <nav class="btn-voltar-container" aria-label="Navegação do blog">
+        <a href="{{ url_for('blog') }}" class="btn-voltar">
+            <i class="fa-solid fa-arrow-left"></i> 
+            <span>Voltar para o Blog</span>
+        </a>
+    </nav>
     <aside class="post-share" aria-label="Compartilhar artigo">
         <h3>Compartilhe este artigo</h3>
         <div class="share-buttons">
@@ -76,13 +75,6 @@
             <a href="https://wa.me/?text={{ post.title }}%20{{ request.url }}" target="_blank" rel="noopener noreferrer" class="share-btn share-whatsapp" aria-label="Compartilhar no WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
     </aside>
-
-    <nav class="btn-voltar-container" aria-label="Navegação do blog">
-        <a href="{{ url_for('blog') }}" class="btn-voltar">
-            <i class="fa-solid fa-arrow-left"></i> 
-            <span>Voltar para o Blog</span>
-        </a>
-    </nav>
 
 </article>
 
