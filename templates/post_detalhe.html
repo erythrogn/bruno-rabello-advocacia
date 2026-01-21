@@ -56,6 +56,18 @@
         </div>
     </div>
 
+<section class="blog-cta-section">
+    <div class="container">
+        <div class="blog-cta">
+            <h3>Precisa de Ajuda Jurídica?</h3>
+            <p>Se você se identificou com este artigo e precisa de orientação especializada, estamos aqui para ajudar.</p>
+            <a href="{{ url_for('contato') }}" class="btn btn-primary">
+                <i class="fa-solid fa-comments"></i> 
+                <span>Falar com Advogado</span>
+            </a>
+        </div>
+    </div>
+</section>
     <aside class="post-share" aria-label="Compartilhar artigo">
         <h3>Compartilhe este artigo</h3>
         <div class="share-buttons">
@@ -72,45 +84,37 @@
         </a>
     </nav>
 
-    {% if related_posts %}
-    <aside class="related-posts" aria-labelledby="related-title">
-        <h3 id="related-title">Artigos Relacionados</h3>
-        <div class="blog-grid">
-            {% for related_post in related_posts[:3] %}
-            <article class="blog-card">
-                <a href="{{ url_for('post_detalhe', slug=related_post.slug.current) }}">
-                    <div class="blog-image">
-                        {% if related_post.imageUrl %}
-                            <img src="{{ related_post.imageUrl }}" alt="{{ related_post.title }}" loading="lazy">
-                        {% else %}
-                            <div class="blog-placeholder"><i class="fa-solid fa-scale-balanced"></i></div>
-                        {% endif %}
-                    </div>
-                    <div class="blog-content">
-                        <h4>{{ related_post.title }}</h4>
-                        <p class="blog-excerpt">{{ related_post.excerpt }}</p>
-                    </div>
-                </a>
-            </article>
-            {% endfor %}
-        </div>
-    </aside>
-    {% endif %}
-
 </article>
 
-<section class="section blog-cta blog-cta-section">
+
+{% if related_posts %}
+<section class="section related-posts-section">
     <div class="container">
-        <aside class="blog-cta" aria-labelledby="cta-post-title">
-            <h3 id="cta-post-title">Precisa de Ajuda Jurídica?</h3>
-            <p>Se você se identificou com este artigo e precisa de orientação especializada, estamos aqui para ajudar.</p>
-            <a href="{{ url_for('contato') }}" class="btn btn-primary">
-                <i class="fa-solid fa-comments"></i> 
-                <span>Falar com Advogado</span>
-            </a>
+        <aside class="related-posts" aria-labelledby="related-title">
+            <h3 id="related-title">Artigos Relacionados</h3>
+            <div class="blog-grid">
+                {% for related_post in related_posts[:3] %}
+                <article class="blog-card">
+                    <a href="{{ url_for('post_detalhe', slug=related_post.slug.current) }}">
+                        <div class="blog-image">
+                            {% if related_post.imageUrl %}
+                                <img src="{{ related_post.imageUrl }}" alt="{{ related_post.title }}" loading="lazy">
+                            {% else %}
+                                <div class="blog-placeholder"><i class="fa-solid fa-scale-balanced"></i></div>
+                            {% endif %}
+                        </div>
+                        <div class="blog-content">
+                            <h4>{{ related_post.title }}</h4>
+                            <p class="blog-excerpt">{{ related_post.excerpt }}</p>
+                        </div>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
         </aside>
     </div>
 </section>
+{% endif %}
 
 <script type="application/ld+json">
 {
