@@ -935,6 +935,8 @@
     flex-wrap: wrap;
     margin-top: 1.5rem;
     padding-bottom: 1rem;
+    position: relative;
+    z-index: 10;
 }
 
 /* Meta data - calendário */
@@ -942,6 +944,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
 }
 
 .meta-date i {
@@ -1098,13 +1103,15 @@
     }
     
     .post-meta-wrapper {
-        margin-top: 1rem;
-        padding-bottom: 0.8rem;
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
         font-size: 0.85rem;
+        position: relative;
+        z-index: 10;
     }
     
     .post-img-container {
-        margin-top: 1.5rem;
+        margin-top: 2rem;
         max-height: 400px;
     }
     
@@ -1215,9 +1222,11 @@
     .post-meta-wrapper {
         flex-direction: column;
         gap: 8px;
-        margin-top: 0.8rem;
-        padding-bottom: 0.5rem;
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
         font-size: 0.8rem;
+        position: relative;
+        z-index: 10;
     }
     
     .meta-date,
@@ -1226,7 +1235,7 @@
     }
     
     .post-img-container {
-        margin-top: 1rem;
+        margin-top: 2rem;
         max-height: 250px;
         border-radius: 8px;
     }
