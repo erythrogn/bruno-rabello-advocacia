@@ -69,12 +69,6 @@
                                 <i class="fa-regular fa-calendar" aria-hidden="true"></i>
                                 {{ post.publishedAt | data_formatada }}
                             </span>
-                            {% if post.author %}
-                            <span>
-                                <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
-                                {{ post.author }}
-                            </span>
-                            {% endif %}
                         </div>
                         
                         <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
