@@ -43,66 +43,70 @@
     
     <section class="blog-hero">
         <div class="blog-slides-container">
-            {% for post in posts[:5] %}
-            <div class="blog-slide {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}">
-                {% if post.imageUrl %}
-                <img src="{{ post.imageUrl }}" 
-                     alt="{{ post.title }}" 
-                     class="blog-slide-image"
-                     loading="{% if loop.first %}eager{% else %}lazy{% endif %}">
-                {% endif %}
-                
-                <div class="blog-slide-content">
-                    <div class="blog-slide-inner">
-                        {% if post.category %}
-                        <span class="blog-slide-category">{{ post.category }}</span>
-                        {% endif %}
-                        
-                        <h2 class="blog-slide-title">{{ post.title }}</h2>
-                        
-                        {% if post.excerpt %}
-                        <p class="blog-slide-description">{{ post.excerpt }}</p>
-                        {% endif %}
-                        
-                        <div class="blog-slide-meta">
-                            <span>
-                                <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                                {{ post.publishedAt | data_formatada }}
-                            </span>
+            <div class="blog-slides-wrapper">
+                {% for post in posts %}
+                <div class="blog-slide {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}">
+                    {% if post.imageUrl %}
+                    <img src="{{ post.imageUrl }}" 
+                         alt="{{ post.title }}" 
+                         class="blog-slide-image"
+                         loading="{% if loop.index <= 3 %}eager{% else %}lazy{% endif %}">
+                    {% endif %}
+                    
+                    <div class="blog-slide-content">
+                        <div class="blog-slide-inner">
+                            {% if post.category %}
+                            <span class="blog-slide-category">{{ post.category }}</span>
+                            {% endif %}
+                            
+                            <h2 class="blog-slide-title">{{ post.title }}</h2>
+                            
+                            {% if post.excerpt %}
+                            <p class="blog-slide-description">{{ post.excerpt }}</p>
+                            {% endif %}
+                            
+                            <div class="blog-slide-meta">
+                                <span>
+                                    <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                                    {{ post.publishedAt | data_formatada }}
+                                </span>
+                            </div>
+                            
+                            <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
+                               class="blog-slide-btn"
+                               aria-label="Ler artigo completo: {{ post.title }}">
+                                <span>Ler Artigo</span>
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </a>
                         </div>
-                        
-                        <a href="{{ url_for('post_detalhe', slug=post.slug.current) }}" 
-                           class="blog-slide-btn"
-                           aria-label="Ler artigo completo: {{ post.title }}">
-                            <span>Ler Artigo</span>
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </a>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
             
             <!-- Navigation Controls -->
             <button class="blog-nav prev" 
-                    aria-label="Artigo anterior"
+                    aria-label="Artigos anteriores"
                     onclick="changeSlide(-1)">
                 <i class="fa fa-chevron-left" aria-hidden="true"></i>
             </button>
             <button class="blog-nav next" 
-                    aria-label="Próximo artigo"
+                    aria-label="Próximos artigos"
                     onclick="changeSlide(1)">
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </button>
-            
-            <!-- Dots Indicator -->
-            <div class="blog-dots">
-                {% for post in posts[:5] %}
-                <span class="blog-dot {% if loop.first %}active{% endif %}" 
-                      data-slide="{{ loop.index0 }}"
-                      onclick="goToSlide({{ loop.index0 }})"
-                      aria-label="Ir para artigo {{ loop.index }}"></span>
-                {% endfor %}
-            </div>
+        </div>
+        
+        <!-- Dots Indicator -->
+        <div class="blog-dots">
+            {% set total_posts = posts|length %}
+            {% set dots_count = ((total_posts - 1) // 3) + 1 if total_posts > 3 else 1 %}
+            {% for i in range(dots_count) %}
+            <span class="blog-dot {% if loop.first %}active{% endif %}" 
+                  data-slide="{{ i }}"
+                  onclick="goToSlide({{ i }})"
+                  aria-label="Ir para grupo de artigos {{ i + 1 }}"></span>
+            {% endfor %}
         </div>
     </section>
     {% endif %}
@@ -260,74 +264,188 @@
     </section>
 
     <script>
-        // Blog Carousel Functionality
-        let currentSlide = 0;
+        // Blog Carousel Functionality - Enhanced Auto-Play with Manual Controls
+        let currentSlideGroup = 0;
+        const wrapper = document.querySelector('.blog-slides-wrapper');
         const slides = document.querySelectorAll('.blog-slide');
         const dots = document.querySelectorAll('.blog-dot');
+        const prevBtn = document.querySelector('.blog-nav.prev');
+        const nextBtn = document.querySelector('.blog-nav.next');
+        const carousel = document.querySelector('.blog-hero');
         const totalSlides = slides.length;
-
-        // Auto-play interval
-        let autoPlayInterval;
-
-        function showSlide(index) {
-            if (totalSlides === 0) return;
-
-            // Normalize index
-            if (index >= totalSlides) {
-                currentSlide = 0;
-            } else if (index < 0) {
-                currentSlide = totalSlides - 1;
+        
+        // Responsive settings
+        let slidesPerView = 3;
+        let isMobile = false;
+        
+        // Auto-play settings
+        let autoPlayInterval = null;
+        let isAutoPlaying = true;
+        const AUTO_PLAY_DELAY = 4000; // 4 seconds
+        const PAUSE_ON_INTERACTION = 8000; // 8 seconds pause after user interaction
+        
+        function updateSlidesPerView() {
+            const width = window.innerWidth;
+            if (width <= 768) {
+                slidesPerView = 1;
+                isMobile = true;
+            } else if (width <= 1024) {
+                slidesPerView = 2;
+                isMobile = false;
             } else {
-                currentSlide = index;
+                slidesPerView = 3;
+                isMobile = false;
             }
+        }
 
-            // Update slides
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === currentSlide);
-            });
-
-            // Update dots
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentSlide);
-            });
-
+        function showSlideGroup(groupIndex, userInteraction = false) {
+            if (totalSlides === 0) return;
+            
+            updateSlidesPerView();
+            
+            // Mobile behavior (original carousel)
+            if (isMobile) {
+                // Normalize index with loop
+                if (groupIndex >= totalSlides) {
+                    currentSlideGroup = 0;
+                } else if (groupIndex < 0) {
+                    currentSlideGroup = totalSlides - 1;
+                } else {
+                    currentSlideGroup = groupIndex;
+                }
+                
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === currentSlideGroup);
+                });
+                
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlideGroup);
+                });
+            } else {
+                // Desktop/Tablet grid slider behavior
+                const maxGroup = Math.ceil(totalSlides / slidesPerView) - 1;
+                
+                // Normalize group index with loop
+                if (groupIndex > maxGroup) {
+                    currentSlideGroup = 0; // Loop back to start
+                } else if (groupIndex < 0) {
+                    currentSlideGroup = maxGroup; // Loop to end
+                } else {
+                    currentSlideGroup = groupIndex;
+                }
+                
+                // Calculate translateX value
+                const slideWidth = slides[0]?.offsetWidth || 0;
+                const gap = parseFloat(getComputedStyle(wrapper).gap) || 32;
+                const offset = -(currentSlideGroup * slidesPerView * (slideWidth + gap));
+                
+                wrapper.style.transform = `translateX(${offset}px)`;
+                
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlideGroup);
+                });
+                
+                // Update button states (but keep them enabled for looping)
+                if (prevBtn && nextBtn) {
+                    prevBtn.disabled = false;
+                    nextBtn.disabled = false;
+                }
+            }
+            
             // Reset auto-play timer
-            resetAutoPlay();
+            if (userInteraction) {
+                // Longer pause after user interaction
+                pauseAutoPlay();
+                setTimeout(() => {
+                    if (isAutoPlaying) startAutoPlay();
+                }, PAUSE_ON_INTERACTION);
+            } else {
+                resetAutoPlay();
+            }
         }
 
         function changeSlide(direction) {
-            showSlide(currentSlide + direction);
+            showSlideGroup(currentSlideGroup + direction, true);
         }
 
         function goToSlide(index) {
-            showSlide(index);
+            showSlideGroup(index, true);
         }
 
         function nextSlide() {
-            changeSlide(1);
+            const maxGroup = isMobile ? totalSlides - 1 : Math.ceil(totalSlides / slidesPerView) - 1;
+            
+            if (currentSlideGroup >= maxGroup) {
+                // Loop back to start
+                showSlideGroup(0, false);
+            } else {
+                showSlideGroup(currentSlideGroup + 1, false);
+            }
+        }
+
+        function startAutoPlay() {
+            if (totalSlides <= 1) return;
+            pauseAutoPlay();
+            autoPlayInterval = setInterval(nextSlide, AUTO_PLAY_DELAY);
+            isAutoPlaying = true;
+        }
+
+        function pauseAutoPlay() {
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
         }
 
         function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
-            autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+            if (totalSlides <= 1) return;
+            pauseAutoPlay();
+            startAutoPlay();
         }
 
-        // Initialize auto-play
+        // Initialize carousel
         if (totalSlides > 0) {
-            resetAutoPlay();
+            updateSlidesPerView();
+            showSlideGroup(0, false);
+            
+            // Start auto-play after a short delay
+            setTimeout(() => {
+                startAutoPlay();
+            }, 1000);
         }
 
-        // Pause on hover
-        const carousel = document.querySelector('.blog-hero');
+        // Pause on hover (desktop only)
         if (carousel) {
             carousel.addEventListener('mouseenter', () => {
-                clearInterval(autoPlayInterval);
+                if (window.innerWidth > 768) {
+                    pauseAutoPlay();
+                }
             });
 
             carousel.addEventListener('mouseleave', () => {
-                resetAutoPlay();
+                if (window.innerWidth > 768) {
+                    startAutoPlay();
+                }
             });
         }
+
+        // Window resize handler
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const oldSlidesPerView = slidesPerView;
+                updateSlidesPerView();
+                
+                if (oldSlidesPerView !== slidesPerView) {
+                    currentSlideGroup = 0;
+                    showSlideGroup(0, false);
+                }
+            }, 250);
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
@@ -338,13 +456,14 @@
             }
         });
 
-        // Touch/swipe support for mobile
+        // Touch/swipe support
         let touchStartX = 0;
         let touchEndX = 0;
 
         if (carousel) {
             carousel.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
+                pauseAutoPlay();
             }, { passive: true });
 
             carousel.addEventListener('touchend', (e) => {
@@ -359,13 +478,27 @@
 
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
-                    // Swiped left - next slide
                     changeSlide(1);
                 } else {
-                    // Swiped right - previous slide
                     changeSlide(-1);
                 }
+            } else {
+                // Resume auto-play if swipe was too small
+                setTimeout(() => {
+                    startAutoPlay();
+                }, 2000);
             }
         }
+
+        // Pause auto-play when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                pauseAutoPlay();
+            } else {
+                if (isAutoPlaying) {
+                    startAutoPlay();
+                }
+            }
+        });
     </script>
 {% endblock %}

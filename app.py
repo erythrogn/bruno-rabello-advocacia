@@ -6,14 +6,11 @@ import requests
 from dateutil import parser
 
 app = Flask(__name__)
-
-# --- CLIENTE SANITY PERSONALIZADO (Para substituir a lib quebrada) ---
 class SanityClient:
     def __init__(self, project_id, dataset, use_cdn=True, token=None):
         self.project_id = project_id
         self.dataset = dataset
         self.token = token
-        # Usa cdn.sanity.io para leitura rápida (cache) ou api.sanity.io para dados frescos
         subdomain = 'api' if not use_cdn else 'apicdn'
         self.base_url = f"https://{project_id}.{subdomain}.sanity.io/v2021-10-21/data/query/{dataset}"
 
