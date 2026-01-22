@@ -179,5 +179,12 @@
     <script src="{{ url_for('static', filename='js/scroll-reveal.js') }}"></script>
     
     {% block scripts %}{% endblock %}
+    <script type="module">
+  // Importa a função 'inject' de um CDN compatível com navegadores
+  import { inject } from 'https://esm.sh/@vercel/analytics';
+  
+  // Inicia o analytics
+  inject();
+</script>
 </body>
 </html>
